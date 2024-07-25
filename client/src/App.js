@@ -6,6 +6,7 @@ import Profile from "./pages/Profile/Profile";
 import Explore from "./pages/Explore/Explore";
 import Signin from "./pages/Signin/Signin";
 import Navbar from "./components/Navbar/Navbar";
+import Error from "./pages/Error/Error";
 
 const Layout = () => {
   return (
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    // errorElement:
+    errorElement: <Error />,
     children: [
       {
         path: '/',

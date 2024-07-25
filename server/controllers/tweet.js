@@ -78,7 +78,7 @@ export const gretUserTweets = async (req, res, next) => {
 export const getExploreTweets = async (req, res, next) => {
     try{
         const exploreTweets = await Tweet.find({like: {$exists: true}}).sort({
-            likes: -1,
+            like: -1,
         });
         res.status(200).json(exploreTweets);
     }
