@@ -52,8 +52,14 @@ const Tweet = ({ tweet, setData }) => {
     <div>
       {userData && (
         <>
+        <div className="flex items-start space-x-2">
+        <img
+              src={userData && userData.profilePicture?userData.profilePicture : "/images/default-profile-picture.jpg"}
+              alt="Profile"
+              className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 mt-2"
+            />
+          <div>
           <div className="flex space-x-2">
-            {/* <img src="" alt="" /> */}
             <Link to={`/profile/${userData._id}`}>
               <h3 className="font-bold">{userData.username}</h3>
             </Link>
@@ -71,6 +77,8 @@ const Tweet = ({ tweet, setData }) => {
             )}
             {tweet.like.length}
           </button>
+          </div>
+          </div>
         </>
       )}
     </div>

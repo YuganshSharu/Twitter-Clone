@@ -12,7 +12,7 @@ const Navbar = () => {
     <div className="grid grid-cols-1 md:grid-cols-4 my-5 justfy-center">
       <div className="mx-auto md:mx-0">
         <img
-          src="/twitter-logo.png"
+          src="/images/twitter-logo.png"
           alt="Twitter Logo"
           width={"40px"}
           className="ml-8"

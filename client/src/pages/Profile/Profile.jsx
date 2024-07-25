@@ -61,9 +61,9 @@ const Profile = () => {
         <div className="col-span-2 border-x-2 border-t-slate-800 px-6">
           <div className="flex justify-between items-center">
             <img
-              src={userProfile?.profilePicture}
+              src={userProfile && userProfile.profilePicture?userProfile.profilePicture : "/images/default-profile-picture.jpg"}
               alt="Profile"
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
             />
             {currentUser && 
               <>
