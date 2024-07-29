@@ -54,17 +54,20 @@ const Profile = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-4">
+      <div className="grid grid-cols-custom-2 grid-cols-custom-2-fixed md:grid-cols-custom-3 md:grid-cols-custom-3-fixed">
         <div className="px-6">
           <LeftSidebar />
         </div>
-        <div className="col-span-2 border-x-2 border-t-slate-800 px-6">
+        <div className="border-x-2 border-t-slate-800 px-6">
           <div className="flex justify-between items-center">
+            <div className="flex flex-col">
             <img
               src={userProfile && userProfile.profilePicture?userProfile.profilePicture : "/images/default-profile-picture.jpg"}
               alt="Profile"
               className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
             />
+            <h2 className="font-bold text-xl ml-1">test</h2>
+            </div>
             {currentUser && 
               <>
                 {currentUser._id === id ? (
@@ -97,7 +100,7 @@ const Profile = () => {
               })}
           </div>
         </div>
-        <div className="px-6">
+        <div className="hidden lg:block px-6">
           <RightSidebar />
         </div>
       </div>

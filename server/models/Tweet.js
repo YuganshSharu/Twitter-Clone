@@ -14,6 +14,9 @@
         type: Array,
         defaultValue: [],
     },
+    imageUrl: {
+        type: String,
+    },
  }, {timestamps: true});
 
  export default mongoose.model("Tweet", TweetSchema);

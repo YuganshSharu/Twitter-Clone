@@ -13,14 +13,14 @@ const Home = () => {
       {!currentUser ? (
         <Signin />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-4">
+        <div className="grid grid-cols-custom-2 grid-cols-custom-2-fixed md:grid-cols-custom-3 md:grid-cols-custom-3-fixed">
           <div className="px-6">
             <LeftSidebar />
           </div>
-          <div className="col-span-2 border-x-2 border-t-slate-800 px-6">
+          <div className="border-x-2 border-t-slate-800 px-6">
             <MainTweet />
           </div>
-          <div className="px-6">
+          <div className="hidden lg:block px-6">
             <RightSidebar />
           </div>
         </div>
