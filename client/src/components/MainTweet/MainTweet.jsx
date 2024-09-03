@@ -16,10 +16,13 @@ const MainTweet = () => {
   const [tweetText, setTweetText] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const [isAddOpen, setIsAddOpen] = useState(false);
+
   const imageFileInput = useRef(null);
   const [img, setImg] = useState(null);
   const [imgUploadProgess, setImgUploadProgess] = useState(null);
   const [downloadURL, setDownloadURL] = useState(null);
+
+  const [hashtags, setHashtags] = useState([]);
 
   const uploadImg = (file) => {
     const storage = getStorage(app);
@@ -50,21 +53,9 @@ const MainTweet = () => {
       },
       () => {
         // Upload completed successfully, now we can get the download URL
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadedURL) => setDownloadURL(downloadedURL)
-          // async (downloadURL) => {
-          // try {
-          //   const updatedProfile = await axios.put(
-          //     `/api/users/${currentUser._id}`,
-          //     {
-          //       profilePicture: downloadURL,
-          //     }
-          //   );
-          //   dispatch(changeProfile(downloadURL));
-          // } catch (error) {
-          //   console.log("error", error);
-          // }
-        // }
-      );
+        getDownloadURL(uploadTask.snapshot.ref).then(
+          (downloadedURL) => setDownloadURL(downloadedURL)
+        );
       }
     );
   };
@@ -75,15 +66,23 @@ const MainTweet = () => {
     console.log("toggleDropdown", isAddOpen);
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-      await axios.post("/api/tweet", {
+      const post = await axios.post("/api/tweet", {
         userId: currentUser._id,
         description: tweetText,
-        ...(downloadURL && { imageUrl: downloadURL })
+        ...(downloadURL && { imageUrl: downloadURL }),
       });
-      console.log("download", downloadURL);
-      window.location.reload(false);
+      // console.log("post", post);
+      // console.log("download", downloadURL);
+      // window.location.reload(false);
+      hashtags.map(async (hashtag) => {
+        await axios.post("/api/trends", {
+          name: hashtag,
+          tweets: [post.data._id],
+        });
+        // console.log("trend", trend);
+      });
+      // console.log("hastags", hashtags);
     } catch (err) {
       console.log(err);
     }
@@ -105,7 +104,14 @@ const MainTweet = () => {
 
       <form className="border-b-2 pb-6">
         <textarea
-          onChange={(e) => setTweetText(e.target.value)}
+          onChange={(e) => {
+            const text = e.target.value;
+            setTweetText(text);
+
+            const hashtagPattern = /#\w+/g;
+            const foundHashtags = text.match(hashtagPattern) || [];
+            setHashtags(foundHashtags);
+          }}
           type="text"
           placeholder="what's happening"
           maxLength={280}
@@ -156,7 +162,10 @@ const MainTweet = () => {
                 </div>
               </div>
             )}
-            {img && ((imgUploadProgess > 0 && imgUploadProgess<100 )? ("Uploading " + imgUploadProgess + "%") : (img.name))}
+            {img &&
+              (imgUploadProgess > 0 && imgUploadProgess < 100
+                ? "Uploading " + imgUploadProgess + "%"
+                : img.name)}
           </div>
         </div>
       </form>
